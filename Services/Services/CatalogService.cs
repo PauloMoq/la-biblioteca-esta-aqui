@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer.Catalog;
 using BusinessObjects.Entity;
+using DataAccessLayer.Repository;
 
 namespace Services.Services
 {
@@ -42,7 +43,12 @@ namespace Services.Services
 
         public IEnumerable<Book> findFantasyBooksInCatalog() 
         {
-            return ShowCatalog(BusinessObjects.Entity.Type.Fantasy);
+            return catalogManager.findFantasyBooks();
+        }
+
+        public Book findBestBookInCatalog()
+        {
+            return catalogManager.findBestBook();
         }
     }
 }

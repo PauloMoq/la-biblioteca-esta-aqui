@@ -48,5 +48,21 @@ namespace BusinessLayer.Catalog
             IEnumerable<Book> res = DisplayCatalog(BusinessObjects.Entity.Type.Fantasy);
             return res;
         }
+
+        public Book findBestBook() 
+        {
+            Book bestBook4Ever = new Book();
+            int bestRatingEver = 0;
+            IEnumerable<Book> books = bookRepository.GetAll();
+            foreach (Book book in books)
+            {
+                if(book.rate > bestRatingEver)
+                {
+                    bestRatingEver = (int)book.rate;
+                    bestBook4Ever = book;
+                }
+            }
+            return bestBook4Ever;
+        }
     }
 }
