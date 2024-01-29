@@ -13,10 +13,12 @@ namespace Services.Services
         public IEnumerable<Book> ShowCatalog()
         {
             IEnumerable<Book> books = CatalogManager.DisplayCatalog();
-            foreach (Book book in books) 
+            #if DEBUG
+            foreach (Book book in books)
             {
                 Console.WriteLine(book);
             }
+            #endif
             return books;
 
         }
