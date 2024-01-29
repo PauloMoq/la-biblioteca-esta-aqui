@@ -10,8 +10,23 @@ namespace Services.Services
 {
     public class CatalogService
     {
-        public void ShowCatalog() => CatalogManager.DisplayCatalog();
-        public void ShowCatalog(BusinessObjects.Entity.Type type) => CatalogManager.DisplayCatalog(type);
+        public void ShowCatalog()
+        {
+            IEnumerable<Book> books = CatalogManager.DisplayCatalog();
+            foreach (Book book in books) 
+            {
+                Console.WriteLine(book);
+            }
+
+        }
+        public void ShowCatalog(BusinessObjects.Entity.Type type)
+        {
+            IEnumerable<Book> books = CatalogManager.DisplayCatalog(type);
+            foreach (Book book in books)
+            {
+                Console.WriteLine(book);
+            }
+        }
         public Book FindBook(int id)
         {
             Book livre = CatalogManager.FindBook(id);
