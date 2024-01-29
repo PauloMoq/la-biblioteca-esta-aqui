@@ -12,12 +12,12 @@ namespace BusinessLayer.Catalog
     public class CatalogManager
     {
         static BookRepository bookRepository = new BookRepository();
-        public static IEnumerable<Book> DisplayCatalog()
+        public IEnumerable<Book> DisplayCatalog()
         {
             IEnumerable<Book> books = bookRepository.GetAll();
             return books;
         }
-        public static IEnumerable<Book> DisplayCatalog(BusinessObjects.Entity.Type type) 
+        public IEnumerable<Book> DisplayCatalog(BusinessObjects.Entity.Type type) 
         {
             /*IEnumerable<Book> books = BookRepository.GetAll();
             IEnumerable<Book> res = new List<Book>();
@@ -29,13 +29,24 @@ namespace BusinessLayer.Catalog
                 }
             }
             return res;*/
-            return bookRepository.GetAll();
+            IEnumerable<Book> allBooks = bookRepository.GetAll();
+            IEnumerable<Book> res = from books
+                                    in allBooks
+                                    where allBooks.GetType().Equals(type)
+                                    select books;
+            return res;
         }
 
-        public static Book FindBook(int id)
+        public Book FindBook(int id)
         {
             Book book = bookRepository.Get(id);
             return book;
+        }
+
+        public IEnumerable<Book> findFantasyBooks()
+        {
+            IEnumerable<Book> res = DisplayCatalog(BusinessObjects.Entity.Type.Fantasy);
+            return res;
         }
     }
 }
