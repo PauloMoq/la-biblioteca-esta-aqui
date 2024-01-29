@@ -17,4 +17,13 @@ namespace BusinessObjects.Entity
         public Author? Author {  get; set; }
 
     }
+
+    public enum Type
+    {
+        Fantasy,
+        Aventure,
+        Enseignement,
+        Histoire,
+        Juridique
+    }
 }
