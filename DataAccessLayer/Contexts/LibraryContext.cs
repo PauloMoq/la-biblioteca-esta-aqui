@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessObjects.Entity
+namespace DataAccessLayer.Contexts
 {
-    public interface IEntity
+    internal class LibraryContext
     {
-        public int? Id { get; set; }
     }
 }
