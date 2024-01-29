@@ -25,10 +25,12 @@ namespace Services.Services
         public IEnumerable<Book> ShowCatalog(BusinessObjects.Entity.Type type)
         {
             IEnumerable<Book> books = CatalogManager.DisplayCatalog(type);
+            #if DEBUG
             foreach (Book book in books)
             {
                 Console.WriteLine(book);
             }
+            #endif
             return books;
         }
         public Book FindBook(int id)
