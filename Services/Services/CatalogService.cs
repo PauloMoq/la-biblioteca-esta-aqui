@@ -10,14 +10,8 @@ namespace Services.Services
 {
     public class CatalogService
     {
-        public void ShowCatalog()
-        {
-            CatalogManager.DisplayCatalog();
-        }
-        public void ShowCatalog(Type type)
-        {
-            CatalogManager.DisplayCatalog(type);
-        }
+        public void ShowCatalog() => CatalogManager.DisplayCatalog();
+        public void ShowCatalog(BusinessObjects.Entity.Type type) => CatalogManager.DisplayCatalog(type);
         public Book FindBook(int id)
         {
             Book livre = CatalogManager.FindBook(id);
