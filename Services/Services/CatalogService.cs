@@ -10,22 +10,24 @@ namespace Services.Services
 {
     public class CatalogService
     {
-        public void ShowCatalog()
+        public IEnumerable<Book> ShowCatalog()
         {
             IEnumerable<Book> books = CatalogManager.DisplayCatalog();
             foreach (Book book in books) 
             {
                 Console.WriteLine(book);
             }
+            return books;
 
         }
-        public void ShowCatalog(BusinessObjects.Entity.Type type)
+        public IEnumerable<Book> ShowCatalog(BusinessObjects.Entity.Type type)
         {
             IEnumerable<Book> books = CatalogManager.DisplayCatalog(type);
             foreach (Book book in books)
             {
                 Console.WriteLine(book);
             }
+            return books;
         }
         public Book FindBook(int id)
         {
