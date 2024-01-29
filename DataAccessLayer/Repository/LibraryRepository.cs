@@ -9,12 +9,12 @@ namespace DataAccessLayer.Repository
 {
     public class LibraryRepository
     {
-        public static IEnumerable<Library> GetAll()
+        public IEnumerable<Library> GetAll()
         {
             return new List<Library>();
         }
 
-        public static Library Get(int id)
+        public Library Get(int id)
         {
             return new Library();
         }

@@ -9,12 +9,12 @@ namespace DataAccessLayer.Repository
 {
     public class AuthorRepository
     {
-        public static IEnumerable<Author> GetAll()
+        public IEnumerable<Author> GetAll()
         {
             return new List<Author>();
         }
 
-        public static Author Get(int id)
+        public Author Get(int id)
         {
             return new Author();
         }

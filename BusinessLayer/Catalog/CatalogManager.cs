@@ -11,20 +11,30 @@ namespace BusinessLayer.Catalog
 {
     public class CatalogManager
     {
-        public static void DisplayCatalog()
+        static BookRepository bookRepository = new BookRepository();
+        public static IEnumerable<Book> DisplayCatalog()
         {
-            IEnumerable<Book> books = BookRepository.GetAll();
-            Console.WriteLine(books);
+            IEnumerable<Book> books = bookRepository.GetAll();
+            return books;
         }
-        public static void DisplayCatalog(BusinessObjects.Entity.Type type) 
+        public static IEnumerable<Book> DisplayCatalog(BusinessObjects.Entity.Type type) 
         {
-            Book book = BookRepository.Get((int)type);
-            Console.WriteLine(book);
+            /*IEnumerable<Book> books = BookRepository.GetAll();
+            IEnumerable<Book> res = new List<Book>();
+            foreach (Book book in books)
+            {
+                if (book.type == type)
+                {
+                    res.Append(book);
+                }
+            }
+            return res;*/
+            return bookRepository.GetAll();
         }
 
         public static Book FindBook(int id)
         {
-            Book book = BookRepository.Get(id);
+            Book book = bookRepository.Get(id);
             return book;
         }
     }
