@@ -11,16 +11,12 @@ namespace DataAccessLayer.Repository
     {
         public static IEnumerable<Book> GetAll()
         {
-<<<<<<< Updated upstream
-
-=======
             return new List<Book>();
         }
 
         public static Book Get(int id)
         {
             return new Book();
->>>>>>> Stashed changes
         }
     }
 }
