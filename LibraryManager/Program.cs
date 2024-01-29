@@ -4,19 +4,20 @@ using Microsoft.Extensions.Hosting;
 
 public class Program
 {
-    
-    private static IHostBuilder CreateHostBuilder(string[] args)
+
+    private static IHost CreateHostBuilder(IConfigurationBuilder configuration)
     {
-        return Host.CreateDefaultBuilder(args)
-            .ConfigureServices((context, services) =>
+        return Host.CreateDefaultBuilder()
+            .ConfigureServices(services =>
             {
                 // Configuration des services
-            });
+            })
+            .Build();
     }
 
-    public static void Main(string[] args)
+    public static void Main(IConfigurationBuilder configuration)
     {
-        var host = CreateHostBuilder(args).Build();
+        var host = CreateHostBuilder(configuration);
         // Exécution du host
         host.Run();
     }
