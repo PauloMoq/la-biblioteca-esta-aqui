@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLayer.Catalog;
 
 namespace Services.Services
 {
@@ -10,15 +11,15 @@ namespace Services.Services
     {
         public void ShowCatalog()
         {
-            DisplayCatalog();
+            Catalog.DisplayCatalog();
         }
         public void ShowCatalog(Type type)
         {
-            DisplayCatalog(type);
+            Catalog.DisplayCatalog(type);
         }
         public Book FindBook(int id)
         {
-            Book livre = FindBook(id);
+            Book livre = Catalog.FindBook(id);
             return livre;
         }
     }
