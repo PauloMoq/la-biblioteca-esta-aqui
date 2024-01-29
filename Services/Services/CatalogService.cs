@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer.Catalog;
+using BusinessObjects.Entity;
 
 namespace Services.Services
 {
@@ -11,15 +12,15 @@ namespace Services.Services
     {
         public void ShowCatalog()
         {
-            Catalog.DisplayCatalog();
+            CatalogManager.DisplayCatalog();
         }
         public void ShowCatalog(Type type)
         {
-            Catalog.DisplayCatalog(type);
+            CatalogManager.DisplayCatalog(type);
         }
         public Book FindBook(int id)
         {
-            Book livre = Catalog.FindBook(id);
+            Book livre = CatalogManager.FindBook(id);
             return livre;
         }
     }
