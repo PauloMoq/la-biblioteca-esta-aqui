@@ -9,9 +9,18 @@ namespace DataAccessLayer.Repository
 {
     public class BookRepository
     {
-        public IEnumerable<Book> GetAll()
+        public static IEnumerable<Book> GetAll()
         {
+<<<<<<< Updated upstream
 
+=======
+            return new List<Book>();
+        }
+
+        public static Book Get(int id)
+        {
+            return new Book();
+>>>>>>> Stashed changes
         }
     }
 }

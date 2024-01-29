@@ -8,13 +8,13 @@ namespace BusinessObjects.Entity
 {
     public class Book
     {
-        public int? Id { get; set; }
-        public string? Name { get; set; }
-        public string? Pages { get; set; }
-        public string? Type { get; set; }
-        public int? Rate { get; set; }
+        public int? id { get; set; }
+        public string? name { get; set; }
+        public string? pages { get; set; }
+        public Type type { get; set; }
+        public int? rate { get; set; }
 
-        public Author? Author {  get; set; }
+        public Author? author {  get; set; }
 
     }
 
