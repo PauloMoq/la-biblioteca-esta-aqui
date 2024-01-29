@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repository
 {
-    public class LibraryRepository
+    public class LibraryRepository : IRepository<Library>
     {
         public IEnumerable<Library> GetAll()
         {

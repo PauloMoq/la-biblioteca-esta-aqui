@@ -9,7 +9,7 @@ using static System.Reflection.Metadata.BlobBuilder;
 
 namespace BusinessLayer.Catalog
 {
-    public class CatalogManager
+    public class CatalogManager : ICatalogManager
     {
         static BookRepository bookRepository = new BookRepository();
         public IEnumerable<Book> DisplayCatalog()

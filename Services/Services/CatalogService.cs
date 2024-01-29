@@ -9,7 +9,7 @@ using DataAccessLayer.Repository;
 
 namespace Services.Services
 {
-    public class CatalogService
+    public class CatalogService : ICatalogService
     {
         public CatalogManager catalogManager = new CatalogManager();
         public IEnumerable<Book> ShowCatalog()

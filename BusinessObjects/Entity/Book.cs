@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessObjects.Entity
 {
-    public class Book
+    public class Book : IEntity
     {
         public int? id { get; set; }
         public string? name { get; set; }
