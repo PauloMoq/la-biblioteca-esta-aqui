@@ -11,10 +11,15 @@ namespace Services.Services
 {
     public class CatalogService : ICatalogService
     {
-        public CatalogManager catalogManager = new CatalogManager();
+        public ICatalogManager _catalogManager;
+
+        public CatalogService(ICatalogManager catalogManager)
+        {
+            _catalogManager = catalogManager;
+        }
         public IEnumerable<Book> ShowCatalog()
         {
-            IEnumerable<Book> books = catalogManager.DisplayCatalog();
+            IEnumerable<Book> books = _catalogManager.DisplayCatalog();
             #if DEBUG
             foreach (Book book in books) 
             {
@@ -26,7 +31,7 @@ namespace Services.Services
         }
         public IEnumerable<Book> ShowCatalog(BusinessObjects.Entity.Type type)
         {
-            IEnumerable<Book> books = catalogManager.DisplayCatalog(type);
+            IEnumerable<Book> books = _catalogManager.DisplayCatalog(type);
             #if DEBUG
             foreach (Book book in books)
             {
@@ -37,18 +42,18 @@ namespace Services.Services
         }
         public Book FindBook(int id)
         {
-            Book livre = catalogManager.FindBook(id);
+            Book livre = _catalogManager.FindBook(id);
             return livre;
         }
 
         public IEnumerable<Book> findFantasyBooksInCatalog() 
         {
-            return catalogManager.findFantasyBooks();
+            return _catalogManager.findFantasyBooks();
         }
 
         public Book findBestBookInCatalog()
         {
-            return catalogManager.findBestBook();
+            return _catalogManager.findBestBook();
         }
     }
 }

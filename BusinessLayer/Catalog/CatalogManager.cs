@@ -10,7 +10,7 @@ using static System.Reflection.Metadata.BlobBuilder;
 namespace BusinessLayer.Catalog
 {
     public class CatalogManager : ICatalogManager
-    {
+    {   
         static BookRepository bookRepository = new BookRepository();
         public IEnumerable<Book> DisplayCatalog()
         {
@@ -19,22 +19,18 @@ namespace BusinessLayer.Catalog
         }
         public IEnumerable<Book> DisplayCatalog(BusinessObjects.Entity.Type type) 
         {
-            /*IEnumerable<Book> books = BookRepository.GetAll();
-            IEnumerable<Book> res = new List<Book>();
-            foreach (Book book in books)
-            {
-                if (book.type == type)
-                {
-                    res.Append(book);
-                }
-            }
-            return res;*/
+            
+            
+            return FilterFantasy(type);
+        }
+
+        private IEnumerable<Book> FilterFantasy(BusinessObjects.Entity.Type type)
+        {
             IEnumerable<Book> allBooks = bookRepository.GetAll();
-            IEnumerable<Book> res = from books
+            return from books
                                     in allBooks
                                     where allBooks.GetType().Equals(type)
                                     select books;
-            return res;
         }
 
         public Book FindBook(int id)

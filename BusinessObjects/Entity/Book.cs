@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessObjects.Entity
 {
-    public class Book : IEntity
+    public class Book : AEntity
     {
         [Key]
         public int? Id { get; set; }

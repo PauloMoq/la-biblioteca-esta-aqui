@@ -2,7 +2,7 @@
 
 namespace BusinessObjects.Entity
 {
-    public class Library : IEntity
+    public class Library : AEntity
     {
         [Key]
         public int? Id { get; set; }
