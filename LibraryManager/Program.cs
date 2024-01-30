@@ -28,7 +28,6 @@ public class Program
         var configuration = new ConfigurationBuilder();
         var host = CreateHostBuilder(configuration);
         var service = host.Services.GetRequiredService<ICatalogService>();
-        //Insérer le test ICI:
         // Exécution du host
         host.Run();
 
