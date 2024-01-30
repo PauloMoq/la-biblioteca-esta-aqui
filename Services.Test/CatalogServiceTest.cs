@@ -24,19 +24,19 @@ namespace Services.Tests
             {
                 new Book
                 {
-                    id = 1,
-                    name = "Le Secret des Dragons",
-                    pages = "320",
-                    type = Type.Fantasy,
-                    rate = 5
+                    Id = 1,
+                    Name = "Le Secret des Dragons",
+                    Pages = "320",
+                    Type = BusinessObjects.Entity.Type.Fantasy,
+                    Rate = 5
                 },
                 new Book
                 {
-                    id = 2,
-                    name = "Les Voyages de Marco Polo",
-                    pages = "450",
-                    type = Type.Aventure,
-                    rate = 4
+                    Id = 2,
+                    Name = "Les Voyages de Marco Polo",
+                    Pages = "450",
+                    Type = BusinessObjects.Entity.Type.Aventure,
+                    Rate = 4
                 }
 
             };
@@ -50,7 +50,26 @@ namespace Services.Tests
         [TestMethod]
         public void ShowCatalog_ByType_ReturnsFilteredBooks()
         {
-            var mockBooks = new List<Book> { /* ajouter des livres fictifs ici, avec différents types */ };
+            var mockBooks = new List<Book>
+            {
+                new Book
+                {
+                    Id = 1,
+                    Name = "Le Secret des Dragons",
+                    Pages = "320",
+                    Type = BusinessObjects.Entity.Type.Fantasy,
+                    Rate = 5
+                },
+                new Book
+                {
+                    Id = 2,
+                    Name = "Les Voyages de Marco Polo",
+                    Pages = "450",
+                    Type = BusinessObjects.Entity.Type.Aventure,
+                    Rate = 4
+                }
+
+            };
             _mockCatalogService.Setup(service => service.ShowCatalog(BusinessObjects.Entity.Type.Fantasy)).Returns(mockBooks.Where(b => b.Type == BusinessObjects.Entity.Type.Fantasy));
 
             var result = _mockCatalogService.Object.ShowCatalog(BusinessObjects.Entity.Type.Fantasy);
@@ -62,7 +81,15 @@ namespace Services.Tests
         public void FindBook_ReturnsCorrectBook()
         {
             var bookId = 1;
-            var mockBook = new Book { /* initialiser avec id = 1 */ };
+            var mockBook = new Book
+                {
+                    Id = 1,
+                    Name = "Le Secret des Dragons",
+                    Pages = "320",
+                    Type = BusinessObjects.Entity.Type.Fantasy,
+                    Rate = 5
+                };
+             
             _mockCatalogService.Setup(service => service.FindBook(bookId)).Returns(mockBook);
 
             var result = _mockCatalogService.Object.FindBook(bookId);
@@ -73,7 +100,26 @@ namespace Services.Tests
         [TestMethod]
         public void FindFantasyBooksInCatalog_ReturnsFantasyBooks()
         {
-            var mockBooks = new List<Book> { /* ajouter des livres de fantasy ici */ };
+            var mockBooks = new List<Book>
+            {
+                new Book
+                {
+                    Id = 1,
+                    Name = "Le Secret des Dragons",
+                    Pages = "320",
+                    Type = BusinessObjects.Entity.Type.Fantasy,
+                    Rate = 5
+                },
+                new Book
+                {
+                    Id = 2,
+                    Name = "Les Voyages de Marco Polo",
+                    Pages = "450",
+                    Type = BusinessObjects.Entity.Type.Fantasy,
+                    Rate = 4
+                }
+
+            };
             _mockCatalogService.Setup(service => service.findFantasyBooksInCatalog()).Returns(mockBooks.Where(b => b.Type == BusinessObjects.Entity.Type.Fantasy));
 
             var result = _mockCatalogService.Object.findFantasyBooksInCatalog();
@@ -84,7 +130,15 @@ namespace Services.Tests
         [TestMethod]
         public void FindBestBookInCatalog_ReturnsBookWithHighestRate()
         {
-            var mockBook = new Book { /* ajouter le livre avec la meilleure évaluation ici */ };
+            var mockBook = new Book
+            {
+                Id = 1,
+                Name = "Le Secret des Dragons",
+                Pages = "320",
+                Type = BusinessObjects.Entity.Type.Fantasy,
+                Rate = 10
+            };
+                
             _mockCatalogService.Setup(service => service.findBestBookInCatalog()).Returns(mockBook);
 
             var result = _mockCatalogService.Object.findBestBookInCatalog();

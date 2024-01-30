@@ -52,9 +52,9 @@ namespace BusinessLayer.Catalog
             IEnumerable<Book> books = bookRepository.GetAll();
             foreach (Book book in books)
             {
-                if(book.rate > bestRatingEver)
+                if(book.Rate > bestRatingEver)
                 {
-                    bestRatingEver = (int)book.rate;
+                    bestRatingEver = (int)book.Rate;
                     bestBook4Ever = book;
                 }
             }
