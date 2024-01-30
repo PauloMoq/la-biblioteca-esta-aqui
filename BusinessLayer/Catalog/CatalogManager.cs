@@ -12,6 +12,11 @@ namespace BusinessLayer.Catalog
     public class CatalogManager : ICatalogManager
     {   
         static BookRepository bookRepository = new BookRepository();
+        public CatalogManager(IRepository<Book> bookRepository)
+        {
+            
+        }
+
         public IEnumerable<Book> DisplayCatalog()
         {
             IEnumerable<Book> books = bookRepository.GetAll();

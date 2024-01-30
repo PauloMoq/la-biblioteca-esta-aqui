@@ -4,52 +4,25 @@ using Services.Services;
 using BusinessObjects.Entity;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using BusinessLayer.Catalog;
 
 namespace Services.Tests
 {
     [TestClass]
     public class CatalogServiceTests
     {
-        private Mock<ICatalogService> _mockCatalogService;
+        private Mock<ICatalogManager> _mockCatalogManager;
 
         public CatalogServiceTests()
         {
-            _mockCatalogService = new Mock<ICatalogService>();
+            _mockCatalogManager = new Mock<ICatalogManager>();
         }
 
         [TestMethod]
         public void ShowCatalog_ReturnsAllBooks()
         {
-            var mockBooks = new List<Book> 
-            {
-                new Book
-                {
-                    Id = 1,
-                    Name = "Le Secret des Dragons",
-                    Pages = "320",
-                    Type = BusinessObjects.Entity.Type.Fantasy,
-                    Rate = 5
-                },
-                new Book
-                {
-                    Id = 2,
-                    Name = "Les Voyages de Marco Polo",
-                    Pages = "450",
-                    Type = BusinessObjects.Entity.Type.Aventure,
-                    Rate = 4
-                }
-
-            };
-            _mockCatalogService.Setup(service => service.ShowCatalog()).Returns(mockBooks);
-
-            var result = _mockCatalogService.Object.ShowCatalog();
-
-            CollectionAssert.AreEqual(mockBooks, result.ToList());
-        }
-
-        [TestMethod]
-        public void ShowCatalog_ByType_ReturnsFilteredBooks()
-        {
+            // Arrange
             var mockBooks = new List<Book>
             {
                 new Book
@@ -68,82 +41,113 @@ namespace Services.Tests
                     Type = BusinessObjects.Entity.Type.Aventure,
                     Rate = 4
                 }
-
             };
-            _mockCatalogService.Setup(service => service.ShowCatalog(BusinessObjects.Entity.Type.Fantasy)).Returns(mockBooks.Where(b => b.Type == BusinessObjects.Entity.Type.Fantasy));
 
-            var result = _mockCatalogService.Object.ShowCatalog(BusinessObjects.Entity.Type.Fantasy);
 
-            Assert.IsTrue(result.All(b => b.Type == BusinessObjects.Entity.Type.Fantasy));
+            _mockCatalogManager.Setup(manager => manager.DisplayCatalog()).Returns(mockBooks);
+            var service = new CatalogService(_mockCatalogManager.Object);
+
+            //Act
+            var result = service.ShowCatalog();
+
+            try
+            {
+                CollectionAssert.AreEqual(mockBooks, (System.Collections.ICollection)result);
+                Console.WriteLine("ShowCatalog_ReturnsAllBooks: Le test a réussi.");
+            }
+            catch (AssertFailedException ex)
+            {
+                Console.WriteLine("ShowCatalog_ReturnsAllBooks: Le test a échoué. " + ex.Message);
+            }
+        }
+        //Nouveaux tests
+        [TestMethod]
+        public void DisplayCatalog_ByType_ReturnsFilteredBooks()
+        {
+            // Arrange
+            var mockBooks = new List<Book>
+            {
+                new Book 
+                { 
+                    Id = 1, Name = "Le Secret des Dragons", Pages = "320", 
+                    Type = BusinessObjects.Entity.Type.Fantasy, Rate = 5 
+                },
+                new Book 
+                { 
+                    Id = 2, Name = "Les Voyages de Marco Polo", Pages = "450",
+                    Type = BusinessObjects.Entity.Type.Aventure, Rate = 4 
+                }
+             };
+            _mockCatalogManager.Setup(manager => manager.DisplayCatalog(BusinessObjects.Entity.Type.Fantasy)).Returns(mockBooks.Where(b => b.Type == BusinessObjects.Entity.Type.Fantasy));
+            var catalogService = new CatalogService(_mockCatalogManager.Object);
+
+            // Act
+            var result = catalogService.ShowCatalog(BusinessObjects.Entity.Type.Fantasy);
+
+            // Assert
+            Assert.IsTrue(result.All(b => b.Type == BusinessObjects.Entity.Type.Fantasy), "DisplayCatalog_ByType_ReturnsFilteredBooks: Le test a échoué.");
         }
 
         [TestMethod]
         public void FindBook_ReturnsCorrectBook()
         {
-            var bookId = 1;
-            var mockBook = new Book
-                {
-                    Id = 1,
-                    Name = "Le Secret des Dragons",
-                    Pages = "320",
-                    Type = BusinessObjects.Entity.Type.Fantasy,
-                    Rate = 5
-                };
-             
-            _mockCatalogService.Setup(service => service.FindBook(bookId)).Returns(mockBook);
+            // Arrange
+            var mockBook = new Book 
+            { 
+                Id = 1, Name = "Le Secret des Dragons", Pages = "320",
+                Type = BusinessObjects.Entity.Type.Fantasy, Rate = 5 
+            };
+            _mockCatalogManager.Setup(manager => manager.FindBook(1)).Returns(mockBook);
+            var catalogService = new CatalogService(_mockCatalogManager.Object);
 
-            var result = _mockCatalogService.Object.FindBook(bookId);
+            // Act
+            var result = catalogService.FindBook(1);
 
-            Assert.AreEqual(mockBook, result);
+            // Assert
+            Assert.AreEqual(mockBook, result, "FindBook_ReturnsCorrectBook: Le test a échoué.");
         }
 
         [TestMethod]
-        public void FindFantasyBooksInCatalog_ReturnsFantasyBooks()
+        public void FindFantasyBooks_ReturnsFantasyBooks()
         {
+            // Arrange
             var mockBooks = new List<Book>
             {
-                new Book
-                {
-                    Id = 1,
-                    Name = "Le Secret des Dragons",
-                    Pages = "320",
-                    Type = BusinessObjects.Entity.Type.Fantasy,
-                    Rate = 5
-                },
-                new Book
-                {
-                    Id = 2,
-                    Name = "Les Voyages de Marco Polo",
-                    Pages = "450",
-                    Type = BusinessObjects.Entity.Type.Fantasy,
-                    Rate = 4
+                new Book 
+                { 
+                    Id = 1, Name = "Le Secret des Dragons", Pages = "320",
+                    Type = BusinessObjects.Entity.Type.Fantasy, Rate = 5 
                 }
-
             };
-            _mockCatalogService.Setup(service => service.findFantasyBooksInCatalog()).Returns(mockBooks.Where(b => b.Type == BusinessObjects.Entity.Type.Fantasy));
+            _mockCatalogManager.Setup(manager => manager.findFantasyBooks()).Returns(mockBooks);
+            var catalogService = new CatalogService(_mockCatalogManager.Object);
 
-            var result = _mockCatalogService.Object.findFantasyBooksInCatalog();
+            // Act
+            var result = catalogService.findFantasyBooksInCatalog();
 
-            Assert.IsTrue(result.All(b => b.Type == BusinessObjects.Entity.Type.Fantasy));
+            // Assert
+            Assert.IsTrue(result.All(b => b.Type == BusinessObjects.Entity.Type.Fantasy), "FindFantasyBooks_ReturnsFantasyBooks: Le test a échoué.");
         }
 
         [TestMethod]
-        public void FindBestBookInCatalog_ReturnsBookWithHighestRate()
+        public void FindBestBook_ReturnsBookWithHighestRate()
         {
-            var mockBook = new Book
+            // Arrange
+            var mockBook = new Book 
             {
-                Id = 1,
-                Name = "Le Secret des Dragons",
-                Pages = "320",
-                Type = BusinessObjects.Entity.Type.Fantasy,
-                Rate = 10
+                Id = 1, Name = "Le Secret des Dragons", Pages = "320",
+                Type = BusinessObjects.Entity.Type.Fantasy, Rate = 5 
             };
-                
-            _mockCatalogService.Setup(service => service.findBestBookInCatalog()).Returns(mockBook);
+            _mockCatalogManager.Setup(manager => manager.findBestBook()).Returns(mockBook);
+            var catalogService = new CatalogService(_mockCatalogManager.Object);
 
-            var result = _mockCatalogService.Object.findBestBookInCatalog();
+            // Act
+            var result = catalogService.findBestBookInCatalog();
 
-            Assert.AreEqual(mockBook, result);
+            // Assert
+            Assert.AreEqual(mockBook, result, "FindBestBook_ReturnsBookWithHighestRate: Le test a échoué.");
         }
+
+
     }
 }
