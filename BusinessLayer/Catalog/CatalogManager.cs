@@ -33,10 +33,9 @@ namespace BusinessLayer.Catalog
         private IEnumerable<Book> FilterFantasy(BusinessObjects.Entity.Type type)
         {
             IEnumerable<Book> allBooks = _bookRepository.GetAll();
-            return from books
-                                    in allBooks
-                                    where allBooks.GetType().Equals(type)
-                                    select books;
+            return from book in allBooks
+                   where book.Type.Equals(type)
+                   select book;
         }
 
         public Book FindBook(int id)

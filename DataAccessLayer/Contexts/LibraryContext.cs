@@ -17,21 +17,30 @@ public class LibraryContext : DbContext
         : base(options)
     {
     }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Book>()
-        .HasKey(b => b.Id);
+        modelBuilder.Entity<Book>(entity =>
+        {
+            entity.ToTable(nameof(Book));
+            entity.HasKey(b => b.Id);
+            entity.HasOne(b => b.Author) // Un livre a un auteur
+                  .WithMany() // Un auteur a plusieurs livres
+                  .HasForeignKey("id_author"); // Utilisation de la bonne clé étrangère
+        });
 
-        modelBuilder.Entity<Book>()
-            .HasOne(b => b.Author)
-            .WithMany()
-            .HasForeignKey(b => b.Id); //Author.Id
+        modelBuilder.Entity<Author>(entity =>
+        {
+            entity.HasKey(a => a.Id);
 
-        modelBuilder.Entity<Author>()
-            .HasKey(b => b.Id);
+            // Si vous avez d'autres configurations pour Author, elles iraient ici
+        });
 
-        modelBuilder.Entity<Library>()
-            .HasKey(b => b.Id);
+        modelBuilder.Entity<Library>(entity =>
+        {
+            entity.HasKey(l => l.Id);
+
+            // Si vous avez d'autres configurations pour Library, elles iraient ici
+        });
     }
+
 }
