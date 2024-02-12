@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Catalog;
 using BusinessObjects.Entity;
 using DataAccessLayer.Repository;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,7 +18,12 @@ public class Program
                 // Configuration des services
                 services.AddScoped<ICatalogService, CatalogService>();
                 services.AddScoped<ICatalogManager, CatalogManager>();
+
+                services.AddScoped<IRepository<Library>, LibraryRepository>();
+                services.AddScoped<IRepository<Author>, AuthorRepository>();
                 services.AddScoped<IRepository<Book>, BookRepository>();
+
+                services.AddDbContext<LibraryContext>();
                 
             })
             .Build();

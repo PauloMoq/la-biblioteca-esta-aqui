@@ -7,7 +7,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-public class LibraryContext
+public class LibraryContext : DbContext
 {
     public DbSet<Author> Authors { get; set; }
     public DbSet<Library> Libraries { get; set; }
@@ -15,8 +15,7 @@ public class LibraryContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(
-            @"Server=(localdb)\mssqllocaldb;Database=Blogging;Trusted_Connection=True");
+        optionsBuilder.UseSqlite(
+            "Data Source=C:\\Users\\moqp3\\Documents\\GitHub\\la-biblioteca-esta-aqui\\ressources\\library.db");
     }
-
 }
