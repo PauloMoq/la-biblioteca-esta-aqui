@@ -9,14 +9,21 @@ namespace DataAccessLayer.Repository
 {
     public class AuthorRepository : IRepository<Author>
     {
+        private readonly LibraryContext _libraryContext;
+
+        public AuthorRepository(LibraryContext libraryContext)
+        {
+            _libraryContext = libraryContext;
+        }
+
         public IEnumerable<Author> GetAll()
         {
-            return new List<Author>();
+            return _libraryContext.Authors.ToArray();
         }
 
         public Author Get(int id)
         {
-            return new Author();
+            return _libraryContext.Authors.Single(Author => Author.Id == id);
         }
     }
 }
