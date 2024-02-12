@@ -18,4 +18,20 @@ public class LibraryContext : DbContext
     {
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Book>()
+        .HasKey(b => b.Id);
+
+        modelBuilder.Entity<Book>()
+            .HasOne(b => b.Author)
+            .WithMany()
+            .HasForeignKey(b => b.Id); //Author.Id
+
+        modelBuilder.Entity<Author>()
+            .HasKey(b => b.Id);
+
+        modelBuilder.Entity<Library>()
+            .HasKey(b => b.Id);
+    }
 }

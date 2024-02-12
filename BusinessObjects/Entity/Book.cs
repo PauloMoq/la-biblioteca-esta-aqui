@@ -18,7 +18,7 @@ namespace BusinessObjects.Entity
         public int? Rate { get; set; }
 
         [ForeignKey(nameof(Author.Id))]
-        public Author? author {  get; set; }
+        public Author? Author {  get; set; }
 
     }
 
