@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Services.Services;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
+using LibraryManager.Hosting.Controllers;
+using System.Text.Json.Serialization;
 
 internal class Program
 {
@@ -20,19 +22,22 @@ internal class Program
         builder.Services.AddScoped<IRepository<Author>, AuthorRepository>();
         builder.Services.AddScoped<IRepository<Book>, BookRepository>();
         builder.Services.AddDbContext<LibraryContext>();
-
-        // Ajoutez le support pour les contrôleurs (si vous utilisez MVC) ou les endpoints minimals
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
         builder.Services.AddControllers();
-
-        // Autres configurations, telles que CORS, si nécessaire
-        // builder.Services.AddCors(...);
 
         var app = builder.Build();
 
-        // Middleware pour utiliser les contrôleurs MVC
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseHttpsRedirection();
+
         app.UseAuthorization();
 
-        // Map les contrôleurs si vous utilisez MVC
         app.MapControllers();
 
         app.Run();
