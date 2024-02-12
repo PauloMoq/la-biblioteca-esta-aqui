@@ -16,6 +16,9 @@ public class LibraryContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlite(
-            "Data Source=C:\\Users\\moqp3\\Documents\\GitHub\\la-biblioteca-esta-aqui\\ressources\\library.db");
+            "Data Source=" +
+         //  "C:\\Users\\moqp3\\Documents\\GitHub\\la-biblioteca-esta-aqui\\ressources\\library.db"
+             "C:\\Users\\natha\\Desktop\\Bureau\\BUT\\BUT_3\\.Net\\Projet avec Paul\\la-biblioteca-esta-aqui\\ressources"
+            );
     }
 }
