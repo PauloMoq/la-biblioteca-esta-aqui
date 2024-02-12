@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using LibraryManager.Hosting.Controllers;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Options;
 
 internal class Program
 {
@@ -21,7 +22,14 @@ internal class Program
         builder.Services.AddScoped<IRepository<Library>, LibraryRepository>();
         builder.Services.AddScoped<IRepository<Author>, AuthorRepository>();
         builder.Services.AddScoped<IRepository<Book>, BookRepository>();
-        builder.Services.AddDbContext<LibraryContext>();
+        builder.Services.AddDbContext<LibraryContext>(options =>{
+
+            options.UseSqlite(
+                "Data Source=" +
+                 //  "C:\\Users\\moqp3\\Documents\\GitHub\\la-biblioteca-esta-aqui\\ressources\\library.db"
+                 "C:\\Users\\natha\\Desktop\\Bureau\\BUT\\BUT_3\\.Net\\Projet avec Paul\\la-biblioteca-esta-aqui\\ressources\\library.db"
+                );
+        });
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddControllers();
