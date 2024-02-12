@@ -10,8 +10,9 @@ using static System.Reflection.Metadata.BlobBuilder;
 namespace BusinessLayer.Catalog
 {
     public class CatalogManager : ICatalogManager
-    {   
-        static BookRepository bookRepository = new BookRepository();
+    {
+        private readonly BookRepository _bookRepository;
+
         public CatalogManager(IRepository<Book> bookRepository)
         {
             
@@ -19,7 +20,7 @@ namespace BusinessLayer.Catalog
 
         public IEnumerable<Book> DisplayCatalog()
         {
-            IEnumerable<Book> books = bookRepository.GetAll();
+            IEnumerable<Book> books = _bookRepository.GetAll();
             return books;
         }
         public IEnumerable<Book> DisplayCatalog(BusinessObjects.Entity.Type type) 
@@ -31,7 +32,7 @@ namespace BusinessLayer.Catalog
 
         private IEnumerable<Book> FilterFantasy(BusinessObjects.Entity.Type type)
         {
-            IEnumerable<Book> allBooks = bookRepository.GetAll();
+            IEnumerable<Book> allBooks = _bookRepository.GetAll();
             return from books
                                     in allBooks
                                     where allBooks.GetType().Equals(type)
@@ -40,7 +41,7 @@ namespace BusinessLayer.Catalog
 
         public Book FindBook(int id)
         {
-            Book book = bookRepository.Get(id);
+            Book book = _bookRepository.Get(id);
             return book;
         }
 
@@ -54,7 +55,7 @@ namespace BusinessLayer.Catalog
         {
             Book bestBook4Ever = new Book();
             int bestRatingEver = 0;
-            IEnumerable<Book> books = bookRepository.GetAll();
+            IEnumerable<Book> books = _bookRepository.GetAll();
             foreach (Book book in books)
             {
                 if(book.Rate > bestRatingEver)
